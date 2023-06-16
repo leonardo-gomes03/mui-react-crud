@@ -1,0 +1,101 @@
+unit Annotation.Controller.Pessoas;
+
+interface
+
+uses
+  Horse,
+  Horse.GBSwagger,
+  GBSwagger.Path.Attributes,
+  GBSwagger.Validator.Interfaces,
+  Annotation.Classes,
+  Controller.Pessoas,
+  Model.Pessoas,
+  System.JSON;
+
+type
+  [SwagPath('pessoas', 'Pessoas')]
+  TUserController = class(THorseGBSwagger)
+  private
+    FRequest: THorseRequest;
+    FResponse: THorseResponse;
+
+  public
+    [SwagGET('Listar Pessoas', True)]
+    [SwagParamHeader('x-paginate','', false, true)]
+    [SwagParamQuery('limit', 'Tamanho da Pagina')]
+    [SwagParamQuery('page', 'Pagina')]
+    [SwagResponse(200, TPessoa, 'Modelo de Resposta', True)]
+    procedure GetUsers;
+
+    [SwagGET('{sequencia}', 'Encontrar Pessoa')]
+    [SwagParamPath('sequencia', 'Sequencia da Pessoa')]
+    [SwagResponse(200, TPessoa)]
+    [SwagResponse(404)]
+    procedure FindUser;
+
+    [SwagPOST('Inserir Usuário')]
+    [SwagParamBody('Dados', TPessoa)]
+    [SwagResponse(201, TPessoa)]
+    [SwagResponse(400)]
+    procedure InsertUser;
+
+    [SwagPatch('{sequencia}', 'Update user')]
+    [SwagParamPath('sequencia', 'Sequencia da Pessoa')]
+    [SwagParamBody('Dados', TPessoa)]
+    [SwagResponse(204)]
+    [SwagResponse(400)]
+    [SwagResponse(404)]
+    procedure UpdateUser;
+
+    [SwagDELETE('{sequencia}', 'Excluir Usuario')]
+    [SwagParamPath('sequencia', 'Sequencia do Usuario')]
+    [SwagResponse(204)]
+    [SwagResponse(400)]
+    [SwagResponse(404)]
+    procedure DeleteUser;
+
+    constructor Create(Req: THorseRequest; Res: THorseResponse);
+end;
+
+implementation
+
+{ TUserController }
+
+constructor TUserController.create(Req: THorseRequest; Res: THorseResponse);
+begin
+  FRequest := Req;
+  FResponse:= Res;
+end;
+
+procedure TUserController.DeleteUser;
+begin
+  FResponse.Status(204);
+end;
+
+//destructor TUserController.Destroy;
+//begin
+//
+//  inherited;
+//end;
+
+procedure TUserController.UpdateUser;
+begin
+  FResponse.Status(204);
+end;
+
+procedure TUserController.FindUser;
+begin
+  FResponse.Send('[{"id": 1, "name": "user 1"}]')
+end;
+
+procedure TUserController.GetUsers;
+begin
+  FResponse.Send('[{"id": 1, "name": "user 1"}]');
+end;
+
+procedure TUserController.InsertUser;
+begin
+  FResponse.Send(FRequest.Body).Status(201);
+end;
+
+end.

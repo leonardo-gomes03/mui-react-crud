@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2022/08/04 11:07:02.000.925,=C:\Users\Desenvolvimento3\Documents\Embarcadero\Studio\Projects\Unit3.pas</Transaction>
+    <Transaction>2023/06/12 15:39:27.000.317,C:\Users\Desenvolvimento3\Documents\Embarcadero\Studio\Projects\Project3.dproj=C:\Desenvolvimento\Treinamento_Leonardo\API Horse\apiHorse.dproj</Transaction>
+    <Transaction>2023/06/13 08:52:07.805,=C:\Desenvolvimento\Treinamento_Leonardo\API Horse\Unit1.pas</Transaction>
+    <Transaction>2023/06/13 08:52:35.967,C:\Desenvolvimento\Treinamento_Leonardo\API Horse\Controller\Controller.Pessoas.pas=C:\Desenvolvimento\Treinamento_Leonardo\API Horse\Unit1.pas</Transaction>
+    <Transaction>2023/06/13 09:10:37.286,=C:\Desenvolvimento\Treinamento_Leonardo\API Horse\Unit1.pas</Transaction>
+    <Transaction>2023/06/13 09:10:54.413,C:\Desenvolvimento\Treinamento_Leonardo\API Horse\Model\Model.Connection.pas=C:\Desenvolvimento\Treinamento_Leonardo\API Horse\Unit1.pas</Transaction>
+    <Transaction>2023/06/13 09:18:09.650,=C:\Desenvolvimento\Treinamento_Leonardo\API Horse\Unit1.pas</Transaction>
+    <Transaction>2023/06/13 09:18:22.247,C:\Desenvolvimento\Treinamento_Leonardo\API Horse\Model\Model.Pessoas.pas=C:\Desenvolvimento\Treinamento_Leonardo\API Horse\Unit1.pas</Transaction>
+  </Transactions>
+	<ActiveMobileDevice>
+		<NoProfile Android64="Pixel_XL_API_30" Android="Pixel_XL_API_25"/>
+	</ActiveMobileDevice>
+</BorlandProject>
