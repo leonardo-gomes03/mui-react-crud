@@ -2,7 +2,8 @@ unit Model.Pessoas;
 
 interface
 
-uses FireDAC.Comp.Client,System.JSON , Data.DB, System.SysUtils, Model.Connection, GBSwagger.Model.Attributes;
+uses FireDAC.Comp.Client,System.JSON , DataSet.Serialize,
+     Data.DB, System.SysUtils, Model.Connection, GBSwagger.Model.Attributes;
 
 type
     TPessoa = class
@@ -39,7 +40,7 @@ type
         [SwagProp('foto', True)]
         property foto : string read Ffoto write Ffoto;
 
-        function ListarPessoas(order_by: string; out erro: string): TFDQuery;
+        function ListarPessoas(order_by: string; out erro: string): TJSONArray;
         function Inserir(out erro: string): Boolean;
         function Excluir(out erro: string): Boolean;
         function Editar(out erro: string): Boolean;
@@ -232,7 +233,7 @@ begin
 end;
 
 function TPessoa.ListarPessoas(order_by: string;
-                                out erro: string): TFDQuery;
+                                out erro: string): TJSONArray;
 var
     qry : TFDQuery;
 begin
@@ -251,12 +252,12 @@ begin
                 SQL.Add('AND SEQUENCIA = :SEQUENCIA');
                 ParamByName('SEQUENCIA').Value := SEQUENCIA;
             end;
-
-            Open ;
+            SQL.Add('ORDER BY SEQUENCIA');
+            Open;
         end;
 
         erro := '';
-        Result := qry.ToJSONArray();;
+        Result := qry.ToJSONArray();
     except on ex:exception do
         begin
             erro := 'Erro ao consultar pessoas: ' + ex.Message;

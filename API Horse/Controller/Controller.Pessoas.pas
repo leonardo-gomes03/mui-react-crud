@@ -132,7 +132,6 @@ begin
   try
     try
       body := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(FReq.Body),0) as TJsonValue;
-      pessoa.SEQUENCIA := body.GetValue<Integer>('sequencia');
       pessoa.NOME := body.GetValue<string>('nome', '');
       pessoa.RG := body.GetValue<string>('rg', '');
       pessoa.CPF := body.GetValue<string>('cpf', '');

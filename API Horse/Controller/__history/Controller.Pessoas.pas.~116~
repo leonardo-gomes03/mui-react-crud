@@ -8,7 +8,7 @@ uses  Horse, System.JSON, System.SysUtils, Model.Connection, Model.Pessoas,
 
 type
   [SwagPath('pessoas', 'Pessoas')]
-  TPessoaController = class(THorseGBSwagger)
+  TPessoaController = class
   private
     FReq: THorseRequest;
     FRes: THorseResponse;
@@ -50,6 +50,7 @@ type
 
     constructor Create(Req: THorseRequest; Res: THorseResponse);
 end;
+
 procedure Registry;
 
 implementation
@@ -57,7 +58,7 @@ implementation
 procedure TPessoaController.ListarPessoas;
 var
   pessoa: TPessoa;
-  qry: TFDQuery;
+  qry: TJSONArray;
   erro: string;
   arrayPessoas: TJSONArray;
 begin
@@ -68,16 +69,17 @@ begin
   end;
   try
     qry := pessoa.ListarPessoas('', erro);
-    arrayPessoas := qry.ToJSONArray();
-    FRes.Send<TJSONArray>(arrayPessoas).Status(200);
+    FRes.Send<TJSONArray>(qry).Status(200);
   finally
-  FreeAndNil(pessoa)
+    FreeAndNil(pessoa)
   end;
 end;
+
+
 procedure TPessoaController.ListarPessoa;
 var
   pessoa: TPessoa;
-  qry: TFDQuery;
+  qry: TJSONArray;
   erro: string;
   arrayPessoa: TJSONArray;
 begin
@@ -89,11 +91,11 @@ begin
   end;
   try
     qry := pessoa.ListarPessoas('', erro);
-    arrayPessoa := qry.ToJSONArray();
-    FRes.Send<TJSONArray>(arrayPessoa).Status(200);
+    FRes.Send<TJSONArray>(qry).Status(200);
   finally
-
+    FreeAndNil(pessoa)
   end;
+
 end;
 procedure TPessoaController.DeletarPessoa;
 var
@@ -112,7 +114,7 @@ begin
     qry := pessoa.Excluir(erro);
     FRes.Send('Pessoa excluida').Status(200);
   finally
-
+            FreeAndNil(pessoa)
   end;
 end;
 procedure TPessoaController.AdicionarPessoa;
@@ -152,7 +154,7 @@ begin
     end;
     FRes.Send('Pessoa Inserida').Status(200);
   finally
-
+ FreeAndNil(pessoa)
   end;
 end;
 
@@ -192,7 +194,7 @@ begin
     end;
     FRes.Send('Pessoa Editada').Status(200);
   finally
-
+   FreeAndNil(pessoa)
   end;
 end;
 

@@ -196,10 +196,9 @@ begin
         begin
 
             SQL.Clear;
-            SQL.Add('INSERT INTO PESSOAS(SEQUENCIA, NOME, RG, CPF, SEXO, DATANASCIMENTO, FOTO) ');
-            SQL.Add('VALUES(:SEQUENCIA, :NOME, :RG, :CPF, :SEXO, :DATANASCIMENTO, :FOTO)');
+            SQL.Add('INSERT INTO PESSOAS(NOME, RG, CPF, SEXO, DATANASCIMENTO, FOTO) ');
+            SQL.Add('VALUES(:NOME, :RG, :CPF, :SEXO, :DATANASCIMENTO, :FOTO)');
 
-            ParamByName('SEQUENCIA').Value := SEQUENCIA;
             ParamByName('NOME').Value := NOME;
             ParamByName('RG').Value := RG;
             ParamByName('CPF').Value := CPF;

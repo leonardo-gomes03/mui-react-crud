@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
+import { Delete, Edit } from "@mui/icons-material";
 import {
   Accordion,
   AccordionDetails,
@@ -8,6 +9,8 @@ import {
   Box,
   Button,
   Divider,
+  Icon,
+  IconButton,
   List,
   ListItem,
   Paper,
@@ -22,6 +25,35 @@ export default function ListHeader() {
   const [page, setPage] = useState(1);
   const [userModal, setUserModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+
+  const [sequencia, setSequencia] = useState();
+  const [nome, setNome] = useState("");
+  const [rg, setRg] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [sexo, setSexo] = useState("");
+  const [datanascimento, setDatanascimento] = useState();
+
+  const addPessoa = () => {
+    setSequencia(null);
+    setNome("");
+    setRg("");
+    setCpf("");
+    setSexo("");
+    setDatanascimento("");
+
+    setIsEdit(false), setUserModal(true);
+  };
+
+  const editPessoa = (sequencia, nome, rg, cpf, sexo, datanascimento) => {
+    setSequencia(sequencia);
+    setNome(nome);
+    setRg(rg);
+    setCpf(cpf);
+    setSexo(sexo);
+    setDatanascimento(datanascimento);
+
+    setIsEdit(true), setUserModal(true);
+  };
 
   const fetchAPI = (pagina) => {
     if (pagina < 1) {
@@ -66,7 +98,14 @@ export default function ListHeader() {
       <UserModal
         isEdit={isEdit}
         open={userModal}
-        onClose={() => setUserModal(false)}
+        onClose={() => (fetchAPI(page), setUserModal(false))}
+        sequencia={sequencia}
+        nome={nome}
+        rg={rg}
+        cpf={cpf}
+        sexo={sexo}
+        datanascimento={datanascimento}
+        // foto={foto}
       />
       <Paper
         elevation={16}
@@ -94,7 +133,7 @@ export default function ListHeader() {
             variant="outlined"
             color="success"
             sx={{ height: "" }}
-            onClick={() => (setIsEdit(false), setUserModal(true))}
+            onClick={() => addPessoa()}
           >
             <Typography>Adicionar Pessoa</Typography>
           </Button>
@@ -122,17 +161,24 @@ export default function ListHeader() {
                     <Typography>Sexo: {el.sexo}</Typography>
                   </Box>
                 </Box>
-                <Box>
-                  <Button
+                <Box paddingLeft={5}>
+                  <IconButton
                     onClick={() => {
-                      setIsEdit(true), setUserModal(true);
+                      editPessoa(
+                        el.sequencia,
+                        el.nome,
+                        el.rg,
+                        el.cpf,
+                        el.sexo,
+                        el.datanascimento
+                      );
                     }}
                   >
-                    Edt
-                  </Button>
-                  <Button onClick={() => deletarPessoa(el.sequencia)}>
-                    Exc
-                  </Button>
+                    <Edit />
+                  </IconButton>
+                  <IconButton onClick={() => deletarPessoa(el.sequencia)}>
+                    <Delete color="error" />
+                  </IconButton>
                 </Box>
               </Paper>
             ))

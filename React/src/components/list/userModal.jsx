@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-const-assign */
@@ -16,42 +17,110 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 export default function UserModal(props) {
+  const [isEdit, setIsEdit] = useState(false);
+
+  const { onClose } = props;
+
+  const [sequencia, setSequencia] = useState();
+  const [nome, setNome] = useState("");
+  const [rg, setRg] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [sexo, setSexo] = useState("");
+  const [datanascimento, setDatanascimento] = useState();
+
+  const pessoa = {
+    sequencia: sequencia,
+    nome: nome,
+    rg: rg,
+    cpf: cpf,
+    sexo: sexo,
+    datanascimento: datanascimento,
+  };
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    data.sequencia = parseInt(data.sequencia, 10);
-    console.log(data);
-
-    fetch(`http://localhost:9000/pessoas`, {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
+  //função close modal
+  const handleClose = () => {
+    onClose(true);
   };
 
-  const [isEdit, setIsEdit] = useState(false);
+  const onSubmit = (data) => {
+    //Valida se é mudança
+    if (isEdit == true) {
+      //Altera
+      //valida de mudança
+      for (var item in data) {
+        if (data[item] == "") {
+          data[item] = pessoa[item];
+        }
+      }
+
+      //envia pra api
+      fetch(`http://localhost:9000/pessoas/` + props.sequencia, {
+        method: "PATCH",
+        headers: {
+          "x-paginate": true,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+          "Access-Control-Allow-Headers": "*",
+          "Access-Control-Allow-Methods": "*",
+          "Access-Control-Expose-Headers": "*",
+        },
+        body: JSON.stringify(data),
+      });
+
+      //fecha modal
+      handleClose();
+    } else {
+      //Insere
+      data.sequencia = null;
+
+      fetch(`http://localhost:9000/pessoas`, {
+        method: "POST",
+        headers: {
+          "x-paginate": true,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+          "Access-Control-Allow-Headers": "*",
+          "Access-Control-Allow-Methods": "*",
+          "Access-Control-Expose-Headers": "*",
+        },
+        body: JSON.stringify(data),
+      });
+
+      //fecha modal
+      handleClose();
+    }
+  };
 
   useEffect(() => {
     setIsEdit(props.isEdit);
-  });
+    setSequencia(props.sequencia);
+    setNome(props.nome);
+    setRg(props.rg);
+    setCpf(props.cpf);
+    setSexo(props.sexo);
+    setDatanascimento(props.datanascimento);
 
-  console.log(isEdit);
+    return () => {};
+  });
 
   return (
     <>
-      <Dialog open={props.open} onClose={props.onClose}>
+      <Dialog open={props.open} onClose={onClose}>
         <DialogTitle>
           {isEdit ? (
-            <Typography>Editar Usuario</Typography>
+            <Typography>Editar Usuario{": " + nome}</Typography>
           ) : (
             <Typography>Adicionar Usuario</Typography>
           )}
         </DialogTitle>
         <DialogContent>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
             <Box
               sx={{
                 display: "flex",
@@ -61,15 +130,6 @@ export default function UserModal(props) {
               }}
             >
               <TextField
-                type="number"
-                placeholder="sequencia"
-                {...register("sequencia", {
-                  required: true,
-                  min: 1,
-                })}
-              />
-
-              <TextField
                 type="text"
                 placeholder="nome"
                 {...register("nome", { required: true, maxLength: 50 })}
@@ -77,27 +137,28 @@ export default function UserModal(props) {
               <TextField
                 type="text"
                 placeholder="rg"
-                {...register("rg", { required: true, maxLength: 11 })}
+                {...register("rg", { maxLength: 11 })}
               />
               <TextField
                 type="text"
                 placeholder="cpf"
-                {...register("cpf", { required: true, maxLength: 11 })}
+                {...register("cpf", { maxLength: 11 })}
               />
               <TextField
                 type="text"
                 placeholder="datanascimento"
                 {...register("datanascimento", {
-                  required: true,
                   maxLength: 11,
                 })}
               />
               <TextField
                 type="text"
                 placeholder="sexo"
-                {...register("sexo", { required: true, maxLength: 11 })}
+                {...register("sexo", { maxLength: 1 })}
               />
-              <Button type="submit">Enviar</Button>
+              <Button variant="contained" type="submit">
+                Enviar
+              </Button>
             </Box>
           </form>
         </DialogContent>
