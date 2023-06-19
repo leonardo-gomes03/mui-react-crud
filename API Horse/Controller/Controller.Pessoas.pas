@@ -2,8 +2,8 @@ unit Controller.Pessoas;
 
 interface
 
-uses  Horse, System.JSON, System.SysUtils, Model.Connection, Model.Pessoas,
-      FireDAC.Comp.Client, DATA.DB, Dataset.Serialize,
+uses  Horse, System.JSON, System.SysUtils, Model.Pessoas,
+      FireDAC.Comp.Client, DATA.DB, Dataset.Serialize, Service.Pessoas,
       Vcl.Graphics, Horse.GBSwagger,Horse.GBSwagger.Register, GBSwagger.Path.Attributes, Web.HTTPApp, System.Classes;
 
 type
@@ -57,74 +57,58 @@ implementation
 
 procedure TPessoaController.ListarPessoas;
 var
-  pessoa: TPessoa;
-  qry: TJSONArray;
   erro: string;
-  arrayPessoas: TJSONArray;
+  LService: TServicePessoas;
 begin
+    LService := TServicePessoas.Create(nil);
   try
-    pessoa := TPessoa.Create;
-  except
-
-  end;
-  try
-    qry := pessoa.ListarPessoas('', erro);
-    FRes.Send<TJSONArray>(qry).Status(200);
+    FRes.Send(LService.GetPessoas('', erro)).Status(200);
   finally
-    FreeAndNil(pessoa)
+    LService.Free;
   end;
 end;
 
 
 procedure TPessoaController.ListarPessoa;
 var
-  pessoa: TPessoa;
-  qry: TJSONArray;
   erro: string;
-  arrayPessoa: TJSONArray;
+  LService: TServicePessoas;
 begin
+    LService := TServicePessoas.Create(nil);
+    LService.SEQUENCIA := FReq.Params['sequencia'].ToInteger;
   try
-    pessoa := TPessoa.Create;
-    pessoa.SEQUENCIA := FReq.Params['sequencia'].ToInteger;
-  except
-
-  end;
-  try
-    qry := pessoa.ListarPessoas('', erro);
-    FRes.Send<TJSONArray>(qry).Status(200);
+    FRes.Send(LService.GetPessoas('', erro)).Status(200);
   finally
-    FreeAndNil(pessoa)
+    LService.Free;
   end;
-
 end;
+
+
 procedure TPessoaController.DeletarPessoa;
 var
-  pessoa: TPessoa;
-  qry: Boolean;
   erro: string;
-  arrayPessoa: TJSONArray;
+  result: Boolean;
+  LService: TServicePessoas;
 begin
+    LService := TServicePessoas.Create(nil);
+    LService.SEQUENCIA := FReq.Params['sequencia'].ToInteger;
   try
-    pessoa := TPessoa.Create;
-    pessoa.SEQUENCIA := FReq.Params['sequencia'].ToInteger;
-  except
-
-  end;
-  try
-    qry := pessoa.Excluir(erro);
-    FRes.Send('Pessoa excluida').Status(200);
+    result := LService.DeletePessoa(erro);
+    FRes.Send('Pessoa Excluida').Status(THTTPStatus.OK);
   finally
-            FreeAndNil(pessoa)
+    LService.Free;
   end;
 end;
+
 procedure TPessoaController.AdicionarPessoa;
 var
-  pessoa: TPessoa;
   erro: string;
+  result: Boolean;
+  LService: TServicePessoas;
   body: TJsonValue;
 begin
   try
-    pessoa := TPessoa.Create;
+    LService := TServicePessoas.Create(nil);
   except
 
   end;
@@ -132,15 +116,15 @@ begin
   try
     try
       body := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(FReq.Body),0) as TJsonValue;
-      pessoa.NOME := body.GetValue<string>('nome', '');
-      pessoa.RG := body.GetValue<string>('rg', '');
-      pessoa.CPF := body.GetValue<string>('cpf', '');
-      pessoa.SEXO := body.GetValue<string>('sexo', '');
-      pessoa.DATANASCIMENTO := body.GetValue<string>('datanascimento', '');
-      pessoa.FOTO := body.GetValue<string>('foto', '');
-      
-      pessoa.Inserir(erro);
-      
+      LService.NOME := body.GetValue<string>('nome', '');
+      LService.RG := body.GetValue<string>('rg', '');
+      LService.CPF := body.GetValue<string>('cpf', '');
+      LService.SEXO := body.GetValue<string>('sexo', '');
+      LService.DATANASCIMENTO := body.GetValue<string>('datanascimento', '');
+      LService.FOTO := body.GetValue<string>('foto', '');
+
+      LService.PostPessoa(erro);
+
       body.Free;
 
       if erro <> '' then
@@ -153,34 +137,34 @@ begin
     end;
     FRes.Send('Pessoa Inserida').Status(200);
   finally
- FreeAndNil(pessoa)
+    LService.Free;
   end;
 end;
 
 procedure TPessoaController.AlterarPessoa;
 var
-  pessoa: TPessoa;
+  LService: TServicePessoas;
   erro: string;
   body: TJsonValue;
 begin
   try
-    pessoa := TPessoa.Create;
+    LService := TServicePessoas.Create(nil);
   except
 
   end;
-  
+
   try
     try
-      pessoa.SEQUENCIA := FReq.Params['sequencia'].ToInteger;
+      LService.SEQUENCIA := FReq.Params['sequencia'].ToInteger;
       body := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(FReq.Body),0) as TJsonValue;
-      pessoa.NOME := body.GetValue<string>('nome','');
-      pessoa.RG := body.GetValue<string>('rg','');
-      pessoa.CPF := body.GetValue<string>('cpf','');
-      pessoa.SEXO := body.GetValue<string>('sexo','');
-      pessoa.DATANASCIMENTO := body.GetValue<string>('datanascimento','');
-      pessoa.FOTO := body.GetValue<string>('foto', '');
-      pessoa.Editar(erro);
-      
+      LService.NOME := body.GetValue<string>('nome','');
+      LService.RG := body.GetValue<string>('rg','');
+      LService.CPF := body.GetValue<string>('cpf','');
+      LService.SEXO := body.GetValue<string>('sexo','');
+      LService.DATANASCIMENTO := body.GetValue<string>('datanascimento','');
+      LService.FOTO := body.GetValue<string>('foto', '');
+      LService.PatchPessoa(erro);
+
       body.Free;
 
       if erro <> '' then
@@ -193,19 +177,13 @@ begin
     end;
     FRes.Send('Pessoa Editada').Status(200);
   finally
-   FreeAndNil(pessoa)
+  LService.Free;
   end;
 end;
 
 
 procedure Registry;
 begin
-//     THorse.Get('/pessoas', ListarPessoas);
-//     THorse.Get('/pessoas/:sequencia', ListarPessoa);
-//     THorse.Delete('/pessoas/:sequencia', DeletarPessoa);
-//     THorse.Post('/pessoas', AdicionaPessoa);
-//     THorse.Patch('/pessoas/:sequencia', AlteraPessoa);
-
     THorseGBSwaggerRegister.RegisterPath(TPessoaController);
 end;
 

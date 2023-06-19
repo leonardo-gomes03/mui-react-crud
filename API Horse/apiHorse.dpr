@@ -13,10 +13,11 @@ uses
   Horse.CORS,
   Horse.GBSwagger,
   Controller.Pessoas in 'Controller\Controller.Pessoas.pas',
-  Model.Connection in 'Model\Model.Connection.pas',
-  Model.Pessoas in 'Model\Model.Pessoas.pas',
-  Annotation.Controller.Pessoas in 'Controller\Annotation.Controller.Pessoas.pas',
-  Annotation.Classes in 'Controller\Annotation.Classes.pas';
+  Model.Pessoas in 'Model\Model.Pessoas.pas' {/  Annotation.Controller.Pessoas in 'Controller\Annotation.Controller.Pessoas.pas',},
+  Service.Pessoas in 'Service\Service.Pessoas.pas' {ServicePessoas: TDataModule};
+
+//  Annotation.Controller.Pessoas in 'Controller\Annotation.Controller.Pessoas.pas',
+//  Annotation.Classes in 'Controller\Annotation.Classes.pas';
 
 
 procedure SwaggerConfig;

@@ -1,0 +1,106 @@
+object ServicePessoas: TServicePessoas
+  Height = 255
+  Width = 390
+  object Connection: TFDConnection
+    Params.Strings = (
+      'Database=C:\Users\leo_0\Downloads\qwer\qwer\TREINAMENTO.FB'
+      'User_Name=SYSDBA'
+      'Password=masterkey'
+      'DriverID=FB')
+    Connected = True
+    Left = 32
+    Top = 32
+  end
+  object qryGet: TFDQuery
+    Active = True
+    Connection = Connection
+    SQL.Strings = (
+      'select * from PESSOAS')
+    Left = 128
+    Top = 40
+    object qryGetSEQUENCIA: TIntegerField
+      FieldName = 'SEQUENCIA'
+      Origin = 'SEQUENCIA'
+      Required = True
+    end
+    object qryGetNOME: TStringField
+      FieldName = 'NOME'
+      Origin = 'NOME'
+      Size = 50
+    end
+    object qryGetRG: TStringField
+      FieldName = 'RG'
+      Origin = 'RG'
+      Size = 11
+    end
+    object qryGetCPF: TStringField
+      FieldName = 'CPF'
+      Origin = 'CPF'
+      Size = 11
+    end
+    object qryGetSEXO: TStringField
+      FieldName = 'SEXO'
+      Origin = 'SEXO'
+      FixedChar = True
+      Size = 1
+    end
+    object qryGetDATANASCIMENTO: TDateField
+      FieldName = 'DATANASCIMENTO'
+      Origin = 'DATANASCIMENTO'
+    end
+    object qryGetFOTO: TBlobField
+      FieldName = 'FOTO'
+      Origin = 'FOTO'
+    end
+  end
+  object qryGetPessoa: TFDQuery
+    Active = True
+    Connection = Connection
+    SQL.Strings = (
+      'SELECT * FROM PESSOAS WHERE SEQUENCIA = :SEQUENCIA')
+    Left = 232
+    Top = 48
+    ParamData = <
+      item
+        Name = 'SEQUENCIA'
+        DataType = ftInteger
+        ParamType = ptInput
+        Size = 5
+        Value = 3
+      end>
+    object qryGetPessoaSEQUENCIA: TIntegerField
+      FieldName = 'SEQUENCIA'
+      Origin = 'SEQUENCIA'
+      Required = True
+    end
+    object qryGetPessoaNOME: TStringField
+      FieldName = 'NOME'
+      Origin = 'NOME'
+      Size = 50
+    end
+    object qryGetPessoaRG: TStringField
+      FieldName = 'RG'
+      Origin = 'RG'
+      Size = 11
+    end
+    object qryGetPessoaCPF: TStringField
+      FieldName = 'CPF'
+      Origin = 'CPF'
+      Size = 11
+    end
+    object qryGetPessoaSEXO: TStringField
+      FieldName = 'SEXO'
+      Origin = 'SEXO'
+      FixedChar = True
+      Size = 1
+    end
+    object qryGetPessoaDATANASCIMENTO: TDateField
+      FieldName = 'DATANASCIMENTO'
+      Origin = 'DATANASCIMENTO'
+    end
+    object qryGetPessoaFOTO: TBlobField
+      FieldName = 'FOTO'
+      Origin = 'FOTO'
+    end
+  end
+end
