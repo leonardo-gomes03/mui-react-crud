@@ -18,24 +18,24 @@ type
     [SwagParamHeader('x-paginate','', true)]
     [SwagParamQuery('limit', 'Tamanho da Pagina')]
     [SwagParamQuery('page', 'Pagina')]
-    [SwagResponse(200, TPessoa, 'Modelo de Resposta', True)]
+    [SwagResponse(200, TPessoaGet, 'Modelo de Resposta', True)]
     procedure ListarPessoas;
 
     [SwagGET('{sequencia}', 'Encontrar Pessoa')]
     [SwagParamPath('sequencia', 'Sequencia da Pessoa')]
-    [SwagResponse(200, TPessoa)]
+    [SwagResponse(200, TPessoaGet)]
     [SwagResponse(404)]
     procedure ListarPessoa;
 
     [SwagPOST('Inserir Usuário')]
-    [SwagParamBody('Dados', TPessoa)]
-    [SwagResponse(201, TPessoa)]
+    [SwagParamBody('Dados', TPessoaPost)]
+    [SwagResponse(201)]
     [SwagResponse(400)]
     procedure AdicionarPessoa;
 
     [SwagPatch('{sequencia}', 'Update user')]
     [SwagParamPath('sequencia', 'Sequencia da Pessoa')]
-    [SwagParamBody('Dados', TPessoa)]
+    [SwagParamBody('Dados', TPessoaPost)]
     [SwagResponse(204)]
     [SwagResponse(400)]
     [SwagResponse(404)]

@@ -16,10 +16,6 @@ uses
   Model.Pessoas in 'Model\Model.Pessoas.pas' {/  Annotation.Controller.Pessoas in 'Controller\Annotation.Controller.Pessoas.pas',},
   Service.Pessoas in 'Service\Service.Pessoas.pas' {ServicePessoas: TDataModule};
 
-//  Annotation.Controller.Pessoas in 'Controller\Annotation.Controller.Pessoas.pas',
-//  Annotation.Classes in 'Controller\Annotation.Classes.pas';
-
-
 procedure SwaggerConfig;
 begin
     Swagger
