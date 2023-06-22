@@ -14,27 +14,20 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 export default function UserModal(props) {
   const [isEdit, setIsEdit] = useState(false);
 
   const { onClose } = props;
 
-  const [sequencia, setSequencia] = useState();
-  const [nome, setNome] = useState("");
-  const [rg, setRg] = useState("");
-  const [cpf, setCpf] = useState("");
-  const [sexo, setSexo] = useState("");
-  const [datanascimento, setDatanascimento] = useState();
-
   const pessoa = {
-    sequencia: sequencia,
-    nome: nome,
-    rg: rg,
-    cpf: cpf,
-    sexo: sexo,
-    datanascimento: datanascimento,
+    sequencia: props.sequencia,
+    nome: props.nome,
+    rg: props.rg,
+    cpf: props.cpf,
+    sexo: props.sexo,
+    datanascimento: props.datanascimento,
   };
 
   const {
@@ -99,13 +92,6 @@ export default function UserModal(props) {
 
   useEffect(() => {
     setIsEdit(props.isEdit);
-    setSequencia(props.sequencia);
-    setNome(props.nome);
-    setRg(props.rg);
-    setCpf(props.cpf);
-    setSexo(props.sexo);
-    setDatanascimento(props.datanascimento);
-
     return () => {};
   });
 
@@ -114,7 +100,7 @@ export default function UserModal(props) {
       <Dialog open={props.open} onClose={onClose}>
         <DialogTitle>
           {isEdit ? (
-            <Typography>Editar Usuario{": " + nome}</Typography>
+            <Typography>Editar Usuario{": " + pessoa.nome}</Typography>
           ) : (
             <Typography>Adicionar Usuario</Typography>
           )}
