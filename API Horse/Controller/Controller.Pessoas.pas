@@ -16,6 +16,7 @@ type
   public
     [SwagGET('Listar Pessoas', True)]
     [SwagParamHeader('x-paginate','', true)]
+    [SwagParamQuery('nome', 'Nome da Pessoa')]
     [SwagParamQuery('limit', 'Tamanho da Pagina')]
     [SwagParamQuery('page', 'Pagina')]
     [SwagResponse(200, TPessoaGet, 'Modelo de Resposta', True)]
@@ -61,12 +62,14 @@ var
   LService: TServicePessoas;
 begin
     LService := TServicePessoas.Create(nil);
+    LService.NOME := FReq.Query['nome'];
   try
     FRes.Send(LService.GetPessoas('', erro)).Status(200);
   finally
     LService.Free;
   end;
 end;
+
 
 
 procedure TPessoaController.ListarPessoa;
@@ -77,7 +80,7 @@ begin
     LService := TServicePessoas.Create(nil);
     LService.SEQUENCIA := FReq.Params['sequencia'].ToInteger;
   try
-    FRes.Send(LService.GetPessoas('', erro)).Status(200);
+    FRes.Send(LService.GetPessoa('', erro)).Status(200);
   finally
     LService.Free;
   end;

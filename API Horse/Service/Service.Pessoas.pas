@@ -66,6 +66,7 @@ type
 
 
     function GetPessoas(order_by: string; out erro: string): TJSONArray;
+    function GetPessoa(order_by: string; out erro: string): TJSONObject;
     function DeletePessoa(out erro: string): Boolean;
     function PostPessoa(out erro: string): Boolean;
     function PatchPessoa(out erro: string): Boolean;
@@ -126,11 +127,16 @@ begin
         qry.Connection := Connection;
         qry.Close;
 
+        NOME := Uppercase(Copy(NOME,1,1))+Lowercase(Copy(NOME,2,Length(NOME)));
+
         with qry do
         begin
             SQL.Clear;
             SQL.Add('SELECT * FROM PESSOAS');
-            SQL.Add('WHERE 1 = 1');
+            SQL.Add('WHERE 1 = 1 ');
+
+            if NOME <> '' then
+              SQL.Add('AND NOME LIKE ' + QuotedStr('%' + NOME + '%'));
 
             if SEQUENCIA > 0 then
             begin
@@ -146,6 +152,41 @@ begin
     except on ex:exception do
         begin
             erro := 'Erro ao consultar pessoas: ' + ex.Message;
+            Result := nil;
+        end;
+    end;
+end;
+
+
+function TServicePessoas.GetPessoa(order_by: string;
+                                out erro: string): TJSONObject;
+var
+    qry : TFDQuery;
+begin
+    try
+        qry := TFDQuery.Create(nil);
+        qry.Connection := Connection;
+        qry.Close;
+
+        with qry do
+        begin
+            if SEQUENCIA <= 0 then
+            begin
+              exit
+            end;
+            SQL.Clear;
+            SQL.Add('SELECT * FROM PESSOAS');
+            SQL.Add('WHERE SEQUENCIA = :SEQUENCIA');
+            ParamByName('SEQUENCIA').Value := SEQUENCIA;
+            SQL.Add('ORDER BY SEQUENCIA');
+        end;
+
+        qry.Open;
+        erro := '';
+        Result := qry.ToJSONObject();
+    except on ex:exception do
+        begin
+            erro := 'Erro ao consultar pessoa: ' + ex.Message;
             Result := nil;
         end;
     end;
