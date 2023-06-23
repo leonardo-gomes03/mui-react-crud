@@ -1,0 +1,216 @@
+object HeaderFooterForm: THeaderFooterForm
+  Left = 0
+  Top = 0
+  Caption = 'Header Footer Form'
+  ClientHeight = 567
+  ClientWidth = 384
+  Position = ScreenCenter
+  FormFactor.Width = 1440
+  FormFactor.Height = 900
+  FormFactor.Devices = [Desktop]
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object TabControl1: TTabControl
+    Align = Client
+    Size.Width = 384.000000000000000000
+    Size.Height = 567.000000000000000000
+    Size.PlatformDefault = False
+    TabIndex = 0
+    TabOrder = 0
+    TabPosition = None
+    Sizes = (
+      384s
+      567s
+      384s
+      567s)
+    object TabItem1: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = True
+      Size.Width = 8.000000000000000000
+      Size.Height = 8.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Listar'
+      ExplicitSize.cx = 8.000000000000000000
+      ExplicitSize.cy = 8.000000000000000000
+      object Footer: TToolBar
+        Align = Bottom
+        Position.Y = 519.000000000000000000
+        Size.Width = 384.000000000000000000
+        Size.Height = 48.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'bottomtoolbar'
+        TabOrder = 1
+        object btnNext: TSpeedButton
+          StyledSettings = [Family, Size, Style]
+          Position.X = 271.000000000000000000
+          Position.Y = 18.000000000000000000
+          Size.Width = 105.000000000000000000
+          Size.Height = 22.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Pr'#243'xima P'#225'gina'
+          OnClick = btnNextClick
+        end
+        object btnPrevious: TSpeedButton
+          Position.X = 159.000000000000000000
+          Position.Y = 18.000000000000000000
+          Size.Width = 104.000000000000000000
+          Size.Height = 22.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Pagina Anterior'
+          OnClick = btnPreviousClick
+        end
+      end
+      object Header: TToolBar
+        Size.Width = 384.000000000000000000
+        Size.Height = 57.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        object HeaderLabel: TLabel
+          Align = Top
+          Size.Width = 384.000000000000000000
+          Size.Height = 57.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'toollabel'
+          TextSettings.HorzAlign = Center
+          Text = 'Listagem de Pessoas'
+        end
+        object btnCadastrar: TButton
+          Align = Scale
+          Position.X = 313.000000000000000000
+          Position.Y = 8.000000000000000000
+          Size.Width = 63.000000000000000000
+          Size.Height = 41.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Text = 'Cadastrar'
+          OnClick = btnCadastrarClick
+        end
+      end
+      object vsbPessoas: TVertScrollBox
+        Align = Client
+        Size.Width = 384.000000000000000000
+        Size.Height = 462.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        Viewport.Width = 384.000000000000000000
+        Viewport.Height = 462.000000000000000000
+      end
+    end
+    object TabItem2: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 8.000000000000000000
+      Size.Height = 8.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Cadastrar'
+      ExplicitSize.cx = 8.000000000000000000
+      ExplicitSize.cy = 8.000000000000000000
+      object Voltar: TCornerButton
+        Position.X = 16.000000000000000000
+        Position.Y = 16.000000000000000000
+        Sides = [Top, Left, Bottom, Right]
+        Size.Width = 57.000000000000000000
+        Size.Height = 33.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'Voltar'
+        XRadius = 3.000000000000000000
+        YRadius = 3.000000000000000000
+        OnClick = VoltarClick
+      end
+      object editNome: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 1
+        Position.X = 16.000000000000000000
+        Position.Y = 90.000000000000000000
+        Size.Width = 353.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object editRG: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 2
+        Position.X = 16.000000000000000000
+        Position.Y = 145.000000000000000000
+        Size.Width = 175.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object editCPF: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 3
+        Position.X = 199.000000000000000000
+        Position.Y = 145.000000000000000000
+        Size.Width = 170.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object editSexo: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 4
+        Position.X = 16.000000000000000000
+        Position.Y = 200.000000000000000000
+        Size.Width = 41.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object editData: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 5
+        Position.X = 199.000000000000000000
+        Position.Y = 200.000000000000000000
+        Size.Width = 170.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object Label1: TLabel
+        Position.X = 16.000000000000000000
+        Position.Y = 65.000000000000000000
+        Text = 'Nome'
+        TabOrder = 6
+      end
+      object Label2: TLabel
+        Position.X = 16.000000000000000000
+        Position.Y = 120.000000000000000000
+        Text = 'RG'
+        TabOrder = 7
+      end
+      object Label3: TLabel
+        Position.X = 199.000000000000000000
+        Position.Y = 120.000000000000000000
+        Text = 'CPF'
+        TabOrder = 8
+      end
+      object Label4: TLabel
+        Position.X = 16.000000000000000000
+        Position.Y = 175.000000000000000000
+        Text = 'Sexo'
+        TabOrder = 9
+      end
+      object Label5: TLabel
+        Position.X = 199.000000000000000000
+        Position.Y = 175.000000000000000000
+        Text = 'Data de Nascimento'
+        TabOrder = 10
+      end
+      object submitButton: TButton
+        Position.X = 199.000000000000000000
+        Position.Y = 238.000000000000000000
+        Size.Width = 170.000000000000000000
+        Size.Height = 43.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 11
+        Text = 'Cadastrar'
+        OnClick = submitButtonClick
+      end
+    end
+  end
+end

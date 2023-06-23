@@ -1,0 +1,71 @@
+object FPessoa: TFPessoa
+  Size.Width = 364.000000000000000000
+  Size.Height = 121.000000000000000000
+  Size.PlatformDefault = False
+  object Rectangle1: TRectangle
+    CornerType = InnerLine
+    Position.Y = 1.000000000000000000
+    Size.Width = 377.000000000000000000
+    Size.Height = 7.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object lblSequencia: TLabel
+    Position.X = 8.000000000000000000
+    Position.Y = 16.000000000000000000
+    Size.Width = 89.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'lblSequencia'
+    TabOrder = 0
+  end
+  object lblNome: TLabel
+    Position.X = 8.000000000000000000
+    Position.Y = 41.000000000000000000
+    Text = 'lblNome'
+    TabOrder = 1
+  end
+  object lblRG: TLabel
+    Position.X = 8.000000000000000000
+    Position.Y = 91.000000000000000000
+    Text = 'lblRG'
+    TabOrder = 2
+  end
+  object lblCPF: TLabel
+    Position.X = 8.000000000000000000
+    Position.Y = 66.000000000000000000
+    Text = 'lblCPF'
+    TabOrder = 3
+  end
+  object btnEditar: TButton
+    Position.X = 256.000000000000000000
+    Position.Y = 24.000000000000000000
+    Size.Width = 100.000000000000000000
+    Size.Height = 34.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    Text = 'Editar'
+    OnClick = btnEditarClick
+  end
+  object btnExcluir: TButton
+    Position.X = 256.000000000000000000
+    Position.Y = 66.000000000000000000
+    Size.Width = 100.000000000000000000
+    Size.Height = 34.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    Text = 'Excluir'
+    OnClick = btnExcluirClick
+  end
+  object lblData: TLabel
+    Position.X = 128.000000000000000000
+    Position.Y = 16.000000000000000000
+    Text = 'lblData'
+    TabOrder = 6
+  end
+  object lblSexo: TLabel
+    Position.X = 128.000000000000000000
+    Position.Y = 41.000000000000000000
+    Text = 'lblSexo'
+    TabOrder = 7
+  end
+end
