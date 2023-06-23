@@ -57,6 +57,7 @@ export default function UserModal(props) {
         method: "PATCH",
         headers: {
           "x-paginate": true,
+          Authorization: "Basic " + btoa("admin:admin"),
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Credentials": true,
           "Access-Control-Allow-Headers": "*",
@@ -76,6 +77,7 @@ export default function UserModal(props) {
         method: "POST",
         headers: {
           "x-paginate": true,
+          Authorization: "Basic " + btoa("admin:admin"),
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Credentials": true,
           "Access-Control-Allow-Headers": "*",

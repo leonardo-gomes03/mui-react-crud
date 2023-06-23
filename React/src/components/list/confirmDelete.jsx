@@ -20,6 +20,7 @@ export default function DeleteModal(props) {
     fetch(`http://localhost:9000/pessoas/` + sequencia, {
       method: "DELETE",
       headers: {
+        Authorization: "Basic" + btoa("admin:admin"),
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Credentials": true,
         "Access-Control-Allow-Headers": "*",
