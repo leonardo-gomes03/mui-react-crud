@@ -10,6 +10,7 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  MenuItem,
   TextField,
   Typography,
 } from "@mui/material";
@@ -17,6 +18,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function UserModal(props) {
+  const BaseURL = "http://localhost:8077/apiHorseDLL.dll";
+
   const [isEdit, setIsEdit] = useState(false);
 
   const { onClose } = props;
@@ -53,7 +56,7 @@ export default function UserModal(props) {
       }
 
       //envia pra api
-      fetch(`http://localhost:9000/pessoas/` + props.sequencia, {
+      fetch(BaseURL + `/pessoas/` + props.sequencia, {
         method: "PATCH",
         headers: {
           "x-paginate": true,
@@ -73,7 +76,7 @@ export default function UserModal(props) {
       //Insere
       data.sequencia = null;
 
-      fetch(`http://localhost:9000/pessoas`, {
+      fetch(BaseURL + `/pessoas/`, {
         method: "POST",
         headers: {
           "x-paginate": true,
@@ -142,8 +145,17 @@ export default function UserModal(props) {
               <TextField
                 type="text"
                 placeholder="sexo"
+                select
+                fullWidth
                 {...register("sexo", { maxLength: 1 })}
-              />
+              >
+                <MenuItem key={"M"} value={"M"}>
+                  Masculino
+                </MenuItem>
+                <MenuItem key={"F"} value={"F"}>
+                  Feminino
+                </MenuItem>
+              </TextField>
               <Button variant="contained" type="submit">
                 Enviar
               </Button>

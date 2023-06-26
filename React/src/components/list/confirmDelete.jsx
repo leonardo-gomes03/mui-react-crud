@@ -17,7 +17,8 @@ export default function DeleteModal(props) {
   const { onClose } = props;
 
   const deletarPessoa = (sequencia) => {
-    fetch(`http://localhost:9000/pessoas/` + sequencia, {
+    const BaseURL = "http://localhost:8077/apiHorseDLL.dll";
+    fetch(BaseURL + `/pessoas/` + sequencia, {
       method: "DELETE",
       headers: {
         Authorization: "Basic" + btoa("admin:admin"),

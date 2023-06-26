@@ -33,6 +33,7 @@ import DeleteModal from "./confirmDelete";
 import UserModal from "./userModal";
 
 export default function ListItems() {
+  const BaseURL = "http://localhost:8077/apiHorseDLL.dll";
   const [dados, setDados] = useState([]);
   const [page, setPage] = useState(1);
   const [userModal, setUserModal] = useState(false);
@@ -42,6 +43,7 @@ export default function ListItems() {
   const [isEdit, setIsEdit] = useState(false);
   const [pageSize, setPageSize] = useState(10);
   const [searchNome, setSearchNome] = useState("");
+  const [refresh, setRefresh] = useState(false);
 
   const [sequencia, setSequencia] = useState();
   const [nome, setNome] = useState("");
@@ -78,7 +80,8 @@ export default function ListItems() {
       pagina = 1;
     }
     await fetch(
-      `http://localhost:9000/pessoas/?` +
+      BaseURL +
+        `/pessoas/?` +
         `limit=` +
         pageSize +
         `&` +
@@ -115,14 +118,15 @@ export default function ListItems() {
 
   useEffect(() => {
     fetchAPI(page, searchNome);
-  }, [pageSize, searchNome]);
+    setRefresh(false);
+  }, [pageSize, searchNome, refresh]);
 
   return (
     <>
       <UserModal
         isEdit={isEdit}
         open={userModal}
-        onClose={() => (fetchAPI(page), setUserModal(false))}
+        onClose={() => (setRefresh(true), setUserModal(false))}
         sequencia={sequencia}
         nome={nome}
         rg={rg}
@@ -133,7 +137,7 @@ export default function ListItems() {
       />
       <DeleteModal
         open={deleteModal}
-        onClose={() => (fetchAPI(page), setDeleteModal(false))}
+        onClose={() => (setRefresh(true), setDeleteModal(false))}
         sequencia={deleteSequencia}
         nome={deleteNome}
       />
@@ -183,6 +187,7 @@ export default function ListItems() {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
+                  marginBottom: 1,
                 }}
               >
                 <Box>
