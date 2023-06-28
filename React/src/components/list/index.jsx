@@ -14,6 +14,7 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Avatar,
   Box,
   Button,
   Divider,
@@ -28,12 +29,14 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import Image from "mui-image";
 import { useEffect, useState } from "react";
 import DeleteModal from "./confirmDelete";
 import UserModal from "./userModal";
 
 export default function ListItems() {
-  const BaseURL = "http://localhost:8077/apiHorseDLL.dll";
+  const BaseURL = "http://localhost:9000";
+
   const [dados, setDados] = useState([]);
   const [page, setPage] = useState(1);
   const [userModal, setUserModal] = useState(false);
@@ -51,6 +54,7 @@ export default function ListItems() {
   const [cpf, setCpf] = useState("");
   const [sexo, setSexo] = useState("");
   const [datanascimento, setDatanascimento] = useState();
+  const [foto, setFoto] = useState();
 
   const addPessoa = () => {
     setSequencia(null);
@@ -59,17 +63,19 @@ export default function ListItems() {
     setCpf("");
     setSexo("");
     setDatanascimento("");
+    setFoto("");
 
     setIsEdit(false), setUserModal(true);
   };
 
-  const editPessoa = (sequencia, nome, rg, cpf, sexo, datanascimento) => {
+  const editPessoa = (sequencia, nome, rg, cpf, sexo, datanascimento, foto) => {
     setSequencia(sequencia);
     setNome(nome);
     setRg(rg);
     setCpf(cpf);
     setSexo(sexo);
     setDatanascimento(datanascimento);
+    setFoto(foto);
 
     setIsEdit(true), setUserModal(true);
   };
@@ -79,6 +85,7 @@ export default function ListItems() {
       setPage(1);
       pagina = 1;
     }
+
     await fetch(
       BaseURL +
         `/pessoas/?` +
@@ -133,7 +140,7 @@ export default function ListItems() {
         cpf={cpf}
         sexo={sexo}
         datanascimento={datanascimento}
-        // foto={foto}
+        foto={foto}
       />
       <DeleteModal
         open={deleteModal}
@@ -177,7 +184,6 @@ export default function ListItems() {
             <PersonAddRounded fontSize="large" color="success" />
           </IconButton>
         </Box>
-
         {dados.length > 0
           ? dados.map((el, index) => (
               <Paper
@@ -190,15 +196,27 @@ export default function ListItems() {
                   marginBottom: 1,
                 }}
               >
-                <Box>
-                  <Box sx={{ display: "flex", gap: 2 }}>
-                    <Typography>{el.sequencia}</Typography>
-                    <Typography>{el.nome}</Typography>
-                  </Box>
-                  <Box sx={{ display: "flex", gap: 2 }}>
-                    <Typography>RG: {el.rg}</Typography>
-                    <Typography>CPF: {el.cpf}</Typography>
-                    <Typography>Sexo: {el.sexo}</Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: 2,
+                    alignItems: "center",
+                  }}
+                >
+                  <Avatar
+                    width="50px"
+                    src={"data:image;base64," + atob(el.foto)}
+                  />
+                  <Box>
+                    <Box sx={{ display: "flex", gap: 1 }}>
+                      <Typography>{el.nome}</Typography>
+                      <Typography>{el.sequencia}</Typography>
+                    </Box>
+                    <Box sx={{ display: "flex", gap: 2 }}>
+                      <Typography>RG: {el.rg}</Typography>
+                      <Typography>CPF: {el.cpf}</Typography>
+                      <Typography>Sexo: {el.sexo}</Typography>
+                    </Box>
                   </Box>
                 </Box>
                 <Box paddingLeft={5}>
@@ -210,7 +228,8 @@ export default function ListItems() {
                         el.rg,
                         el.cpf,
                         el.sexo,
-                        el.datanascimento
+                        el.datanascimento,
+                        el.foto
                       );
                     }}
                   >
