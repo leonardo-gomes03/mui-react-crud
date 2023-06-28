@@ -55,5 +55,5 @@ begin
     SwaggerConfig;
     Controller.Pessoas.Registry;
 
-    THorse.Listen(9000);
+    THorse.Listen();
 end.

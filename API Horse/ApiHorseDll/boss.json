@@ -1,9 +1,9 @@
 {
-	"name": "API Horse",
+	"name": "ApiHorseDll",
 	"description": "",
 	"version": "1.0.0",
 	"homepage": "",
-	"mainsrc": "./",
+	"mainsrc": "./src",
 	"projects": [],
 	"dependencies": {
 		"github.com/bittencourtthulio/horse-paginate": "^1.0.2",
