@@ -18,6 +18,7 @@ import {
 import { ChevronDown, ChevronUp, Edit, Plus, Trash, UserPlus } from '@tamagui/lucide-icons'
 import React, { useEffect, useState } from 'react'
 import { useLink } from 'solito/link'
+import { DialogAdd } from './addScreen'
 import { DialogDelete } from './deleteModal'
 import { DialogEdit } from './editScreen'
 export function HomeScreen() {
@@ -242,16 +243,7 @@ export function HomeScreen() {
         </YGroup>
       </ScrollView>
 
-      <Button
-        icon={UserPlus}
-        position="absolute"
-        circular
-        backgroundColor="$blue3Dark"
-        color="$blue11Dark"
-        size="$6"
-        bottom="$2"
-        right="$2"
-      />
+      <DialogAdd />
     </YStack>
   )
 }

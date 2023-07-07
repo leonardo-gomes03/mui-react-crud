@@ -1,7 +1,8 @@
-import { Trash, X } from '@tamagui/lucide-icons'
+import { Edit, Trash, UserPlus, X } from '@tamagui/lucide-icons'
 import { useState } from 'react'
 import {
   Adapt,
+  Avatar,
   Button,
   Dialog,
   Fieldset,
@@ -15,7 +16,7 @@ import {
   YStack,
 } from 'tamagui'
 
-export function DialogDelete(props) {
+export function DialogAdd(props) {
   const [open, setOpen] = useState(false)
   return (
     <Dialog
@@ -26,23 +27,25 @@ export function DialogDelete(props) {
     >
       <Dialog.Trigger asChild>
         <Button
-          icon={Trash}
-          color={'$red10Dark'}
-          alignSelf="flex-end"
-          size="$4.5"
+          icon={UserPlus}
+          position="absolute"
           circular
-          chromeless
+          backgroundColor="$blue3"
+          color="$blue11"
+          size="$6"
+          bottom="$2"
+          right="$2"
         />
       </Dialog.Trigger>
 
-      {/* <Adapt when="sm" platform="touch">
+      <Adapt when="sm" platform="touch">
         <Sheet zIndex={200000} modal dismissOnSnapToBottom>
-          <Sheet.Frame padding="$4" space  >
+          <Sheet.Frame padding="$4" space>
             <Adapt.Contents />
           </Sheet.Frame>
           <Sheet.Overlay />
         </Sheet>
-      </Adapt> */}
+      </Adapt>
 
       <Dialog.Portal>
         <Dialog.Overlay
@@ -69,8 +72,32 @@ export function DialogDelete(props) {
           exitStyle={{ x: 0, y: 10, opacity: 0, scale: 0.95 }}
           space
         >
-          <Dialog.Title>Deletar Usuario</Dialog.Title>
-          <Dialog.Description>Deseja deletar o usuário {props.nome}?</Dialog.Description>
+          <Dialog.Title>Adicionar Usuario</Dialog.Title>
+
+          <Avatar circular size="$8" marginVertical="$2">
+            <Avatar.Image src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" />
+          </Avatar>
+
+          <XStack ai="center">
+            <Paragraph f={1}>Nome </Paragraph>
+            <Input f={2} />
+          </XStack>
+          <XStack ai="center">
+            <Paragraph f={1}>Rg </Paragraph>
+            <Input f={2} />
+          </XStack>
+          <XStack ai="center">
+            <Paragraph f={1}>Cpf </Paragraph>
+            <Input f={2} />
+          </XStack>
+          <XStack ai="center">
+            <Paragraph f={2}>Sexo </Paragraph>
+            <Input f={1} />
+          </XStack>
+          <XStack ai="center">
+            <Paragraph f={2}>Data de Nascimento </Paragraph>
+            <Input f={1} />
+          </XStack>
 
           <XStack alignSelf="flex-end" space>
             <Dialog.Close displayWhenAdapted asChild>
@@ -80,8 +107,8 @@ export function DialogDelete(props) {
             </Dialog.Close>
 
             <Dialog.Close displayWhenAdapted asChild>
-              <Button backgroundColor="$red11" color="$red1" aria-label="Close">
-                Deletar
+              <Button backgroundColor="$green11" color="$green1" aria-label="Close">
+                Adicionar
               </Button>
             </Dialog.Close>
           </XStack>
